@@ -31,13 +31,13 @@ D=M
 @R1
 D=D-M
 
-@ifr0 // if r0 >= r1 goto ifr0
+@ITEM_R0_ITERATOR_R1 // if r0 >= r1 goto ifr0
 D; JGE
 
-@ifr1 // if r0 < r1 goto ifr1
+@ITEM_R1_ITERATOR_R0 // if r0 < r1 goto ifr1
 D; JLT
 
-(ifr0)
+(ITEM_R0_ITERATOR_R1)
     @R0 
     D=M 
     @item  // init item with value of r0
@@ -50,7 +50,7 @@ D; JLT
     @LOOP
     0; JMP
 
-(ifr1)
+(ITEM_R1_ITERATOR_R0)
     @R1
     D=M
     @item // initialize item with value of r1
