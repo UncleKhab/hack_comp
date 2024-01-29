@@ -11,62 +11,46 @@
 // 'white' in every pixel;
 // the screen should remain fully clear as long as no key is pressed.
 
+//// Replace this comment with your code.
+
 @8191
 D=A
-@n_reset
+@n
 M=D
 
-
-
-// CHECKS IF THE KEY IS PRESSED OR NOT
 (LOOP_KEY)
-    @n
-    D=M
-    @RESET_N
-    D; JLE
-
-    @KBD
-    D=M
-
-    @CHECK_WHITE
-    D; JLE
-    @CHECK_BLACK
-    D; JGT
-
-
-(RESET_N)
-    @n_reset
-    D=M
-    @n
-    M=D
-
-    @LOOP_KEY
-    0; JMP
-
-// CHECKS IF THE FIRST PIXEL IS BLACK 
-// if the first pixel is not black, paint everything black
-(CHECK_BLACK)
     @SCREEN
+    D=A
+    A=D+1
     D=M
-    @PAINT_BLACK
+    @KBD
+    D=D + M
+    @LOOP_INTERNAL
     D; JGE
 
-    @LOOP_KEY
-    0; JMP
-
-// CHECKS IF THE FIRST PIXEL IS WHITE
-// if the first pixel is not white, paint everything white
-(CHECK_WHITE)
-    @SCREEN
+    
+(LOOP_INTERNAL)    
+    @KBD
     D=M
-
-    @PAINT_WHITE
-    D; JLT
+    
     @LOOP_KEY
+    D; JEQ
+    
+    @LOOP_BLACK
+    D; JGT
+        
+    @LOOP_WHITE
     0; JMP
+    
+    
 
-// PAINT BLACK FROM BOTTOM TO TOP
-(PAINT_BLACK)
+(LOOP_BLACK)
+    @n
+    D=M
+    @LOOP_KEY
+    D; JLT
+
+
     @SCREEN
     D=A
     @n
@@ -77,15 +61,20 @@ M=D
     @n
     D=M-1
     M=D
-
-    @PAINT_BLACK
+    
+    @LOOP_BLACK // WE LOOP WHILE N >= 0
     D; JGE
 
     @LOOP_KEY
     0; JMP
 
-// PAINT WHITE FROM BOTTOM TO TOP
-(PAINT_WHITE)
+    
+(LOOP_WHITE)
+    @n
+    D=M
+    @LOOP_KEY
+    D; JLT
+
     @SCREEN
     D=A
     @n
@@ -96,8 +85,8 @@ M=D
     @n
     D=M-1
     M=D
-
-    @PAINT_WHITE
+    
+    @LOOP_WHITE
     D; JGE
 
     @LOOP_KEY
