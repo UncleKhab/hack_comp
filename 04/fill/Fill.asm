@@ -13,7 +13,7 @@
 
 //// Replace this comment with your code.
 
-@8192
+@8191
 D=A
 @n
 M=D
@@ -24,32 +24,23 @@ M=D
     A=D+1
     D=M
     @KBD
-    D= D + M
+    D=D + M
     @LOOP_INTERNAL
     D; JGE
 
-    @8192
-    D=A
-    @n
-    M=D
+    
+(LOOP_INTERNAL)    
+    @KBD
+    D=M
+    
+    @LOOP_KEY
+    D; JEQ
+    
+    @LOOP_BLACK
+    D; JGT
+        
     @LOOP_WHITE
     0; JMP
-
-    (LOOP_INTERNAL)    
-        @KBD
-        D=M
-        
-        @LOOP_KEY
-        D; JEQ
-        
-        @8192
-        D=A
-        @n
-        M=D
-        
-        @LOOP_BLACK
-        D; JGT
-    
     
     
 
